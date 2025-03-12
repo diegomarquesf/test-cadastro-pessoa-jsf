@@ -39,7 +39,6 @@
 	                <p:inputText 
 	                	id="nome" 
 	                	value="#{cadastroPessoaBean.pessoa.nome}" 
-	                    required="true" 
 	                    style="width: 100%"
 	                    placeholder="Digite o nome completo"/>
 	            </p:panelGrid>
@@ -76,7 +75,9 @@
 	                icon="pi pi-plus"
 	                styleClass="ui-button-secondary"/>
 	                
-				<p:dialog header="Novo Documento" 
+				<p:dialog 
+					id="dlgDoc"
+					header="Novo Documento" 
 	                widgetVar="dlgDoc" 
 	                modal="true" 
 	                showEffect="fade" 
@@ -92,7 +93,6 @@
 		           		<p:inputText 
 		           			id="docTipo" 
 		           			value="#{cadastroPessoaBean.documento.tipo}" 
-		           			required="true"
 		           			style="width: 100%"/>
 		           		
 		           		<p:outputLabel 
@@ -102,7 +102,6 @@
 		           		<p:inputText 
 		           			id="docNumero" 
 		           			value="#{cadastroPessoaBean.documento.numero}" 
-		           			required="true"
 		           			style="width: 100%"/>
 		           	</p:panelGrid>
 		           	
@@ -111,7 +110,8 @@
 			           		value="Adicionar"
 				            action="#{cadastroPessoaBean.adicionarDocumento}"
 				            update="tabelaDocumentos messages"
-				            oncomplete="PF('dlgDoc').hide()"/>
+				            oncomplete="PF('dlgDoc').hide()"
+				           	process="formCadastro dlgDoc" />
 				    </div>
 		        </p:dialog>
 			</p:fieldset>
@@ -152,6 +152,7 @@
 					styleClass="ui-button-secondary"/>
 						
 				<p:dialog
+					id="dlgEnd"
 					header="Novo endereço"
 					widgetVar="dlgEnd"
 					modal="true"
@@ -168,7 +169,6 @@
 	                    <p:inputText 
 	                    	id="endLog" 
 	                    	value="#{cadastroPessoaBean.endereco.logradouro}" 
-	                    	required="true"
 	                    	style="width:100%"/>
 	                    
 	                    <p:outputLabel 
@@ -187,7 +187,6 @@
 	                    <p:inputText 
 	                    	id="endCid" 
 	                    	value="#{cadastroPessoaBean.endereco.cidade}" 
-	                    	required="true"
 	                    	style="width:100%"/>
 	                </p:panelGrid>
 	                
@@ -196,7 +195,8 @@
 		                	value="Adicionar"
 		                    action="#{cadastroPessoaBean.adicionarEndereco}"
 		                    update="tabelaEnderecos messages"
-		                    oncomplete="PF('dlgEnd').hide()"/>
+		                    oncomplete="PF('dlgEnd').hide()"
+		                    process="formCadastro dlgEnd" />
 		            </div>
 				</p:dialog>
 			</p:fieldset>
@@ -232,7 +232,9 @@
 	                icon="pi pi-plus"
 	                styleClass="ui-button-secondary"/>
 	                
-	            <p:dialog header="Novo Contato" 
+	            <p:dialog
+	            	 id="dlgCont" 
+	            	 header="Novo Contato" 
 	                 widgetVar="dlgCont" 
 	                 modal="true" 
 	                 showEffect="fade" 
@@ -248,7 +250,6 @@
 	                	<p:inputText 
 	                		id="contTipo" 
 	                		value="#{cadastroPessoaBean.contato.tipo}" 
-	                		required="true"
 	                		style="width:100%"/>
 	                	
 	                	<p:outputLabel 
@@ -258,7 +259,6 @@
 	               		<p:inputText 
 	               			id="contValor" 
 	               			value="#{cadastroPessoaBean.contato.numero}" 
-	               			required="true"
 	               			style="width:100%"/>
 	               	</p:panelGrid>
 	
@@ -267,7 +267,8 @@
 							value="Adicionar"
 							action="#{cadastroPessoaBean.adicionarContato}"
 							update="tabelaContatos messages" 
-							oncomplete="PF('dlgCont').hide()"/>
+							oncomplete="PF('dlgCont').hide()"
+							process="formCadastro dlgCont" />
 					</div>
 	             </p:dialog>
 			</p:fieldset>

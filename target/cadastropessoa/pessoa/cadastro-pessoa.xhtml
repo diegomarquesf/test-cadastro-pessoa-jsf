@@ -111,7 +111,8 @@
 			           		value="Adicionar"
 				            action="#{cadastroPessoaBean.adicionarDocumento}"
 				            update="tabelaDocumentos messages"
-				            oncomplete="PF('dlgDoc').hide()"/>
+				            oncomplete="PF('dlgDoc').hide()"
+				            process="formCadastro dlgDoc" />
 				    </div>
 		        </p:dialog>
 			</p:fieldset>
@@ -196,7 +197,8 @@
 		                	value="Adicionar"
 		                    action="#{cadastroPessoaBean.adicionarEndereco}"
 		                    update="tabelaEnderecos messages"
-		                    oncomplete="PF('dlgEnd').hide()"/>
+		                    oncomplete="PF('dlgEnd').hide()"
+		                    process="formCadastro dlgEnd" />
 		            </div>
 				</p:dialog>
 			</p:fieldset>
@@ -267,7 +269,8 @@
 							value="Adicionar"
 							action="#{cadastroPessoaBean.adicionarContato}"
 							update="tabelaContatos messages" 
-							oncomplete="PF('dlgCont').hide()"/>
+							oncomplete="PF('dlgCont').hide()"
+							process="formCadastro dlgCont" />
 					</div>
 	             </p:dialog>
 			</p:fieldset>
