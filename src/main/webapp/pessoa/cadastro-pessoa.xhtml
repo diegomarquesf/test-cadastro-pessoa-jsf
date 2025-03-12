@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+	<title>Cadastro de Pessoa</title>
+	
+    <h:outputStylesheet>
+        .container { width: 100%; max-width: 900px; margin: 20px auto; padding: 20px; }
+        .custom-panel { border: 1px solid #e0e0e0; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .ui-fieldset { margin: 20px 0; border-radius: 5px; }
+        .action-buttons { margin-top: 20px; text-align: center; }
+        .ui-datatable { margin-bottom: 15px; }
+        .ui-dialog .ui-dialog-content { padding: 20px; }
+        .button-group { margin-top: 15px; text-align: right; }
+    </h:outputStylesheet>
+</h:head>
+
+<h:body>
+	<h:form id="formCadastro">
+		<p:growl id="messages" showDetail="true" sticky="false" life="3000"/>
+		
+		<div class="container">
+			<p:panel 
+				header="Cadastro de Pessoa" 
+				styleClass="custom-panel">
+			
+	            <p:panelGrid 
+	            	columns="2" 
+	            	columnClasses="ui-g-3,ui-g-9"
+	            	style="width: 100%">
+	            	
+	                <p:outputLabel 
+	                	for="nome" 
+	                	value="Nome:" />
+	                	
+	                <p:inputText 
+	                	id="nome" 
+	                	value="#{cadastroPessoaBean.pessoa.nome}" 
+	                    required="true" 
+	                    style="width: 100%"
+	                    placeholder="Digite o nome completo"/>
+	            </p:panelGrid>
+	        </p:panel>
+
+			<!-- Documentos -->
+			<p:fieldset legend="Documentos" styleClass="custom-panel">
+			
+				<p:dataTable 
+					id="tabelaDocumentos"
+					value="#{cadastroPessoaBean.pessoa.documentos}" 
+					var="doc"
+					emptyMessage="Nenhum documento cadastrado!">
+					
+					<p:column headerText="Tipo" style="width: 50%">
+						<p:inputText value="#{doc.tipo}" />
+					</p:column>
+	
+					<p:column headerText="Número" style="width:50%">
+						<p:inputText value="#{doc.numero}" />
+					</p:column>
+	
+					<p:column headerText="Ações" style="width:20%; text-align:center">
+						<p:commandButton 
+							icon="pi pi-trash"
+							action="#{cadastroPessoaBean.removerDocumento(doc)}"
+							update="tabelaDocumentos messages" />
+					</p:column>
+				</p:dataTable>
+				
+				<p:commandButton 
+					value="Novo Documento"
+					onclick="PF('dlgDoc').show()"
+	                icon="pi pi-plus"
+	                styleClass="ui-button-secondary"/>
+	                
+				<p:dialog header="Novo Documento" 
+	                widgetVar="dlgDoc" 
+	                modal="true" 
+	                showEffect="fade" 
+	                hideEffect="fade"
+	                resizable="false"
+	                width="400">
+	                
+		           <p:panelGrid columns="2" style="width:100%">
+		           		<p:outputLabel 
+		           			value="Tipo:" 
+		           			for="docTipo"/>
+		           		
+		           		<p:inputText 
+		           			id="docTipo" 
+		           			value="#{cadastroPessoaBean.documento.tipo}" 
+		           			required="true"
+		           			style="width: 100%"/>
+		           		
+		           		<p:outputLabel 
+		           			value="Número" 
+		           			for="docNumero"/>
+		           		
+		           		<p:inputText 
+		           			id="docNumero" 
+		           			value="#{cadastroPessoaBean.documento.numero}" 
+		           			required="true"
+		           			style="width: 100%"/>
+		           	</p:panelGrid>
+		           	
+		           	<div class="button-group">
+			           	<p:commandButton 
+			           		value="Adicionar"
+				            action="#{cadastroPessoaBean.adicionarDocumento}"
+				            update="tabelaDocumentos messages"
+				            oncomplete="PF('dlgDoc').hide()"/>
+				    </div>
+		        </p:dialog>
+			</p:fieldset>
+
+			<!-- Endereço -->
+			<p:fieldset legend="Endereços" styleClass="custom-panel">
+				
+				<p:dataTable 
+					id="tabelaEnderecos"
+					value="#{cadastroPessoaBean.pessoa.enderecos}" 
+					var="end"
+					emptyMessage="Nenhum endereço cadastrado" >
+					
+					<p:column headerText="Logradouro" style="width: 40%">
+						<p:inputText value="#{end.logradouro}" />
+					</p:column>
+	
+					<p:column headerText="Número" style="width: 15%">
+						<p:inputText value="#{end.numero}" />
+					</p:column>
+	
+					<p:column headerText="Cidade" style="width: 15%">
+						<p:inputText value="#{end.cidade}" />
+					</p:column>
+	
+					<p:column headerText="Ações" style="width:20%; text-align:center">
+						<p:commandButton 
+							icon="pi pi-trash"
+							action="#{cadastroPessoaBean.removerEndereco(end)}"
+							update="tabelaEnderecos messages" />
+					</p:column>
+				</p:dataTable>
+				
+				<p:commandButton
+					value="Novo Endereço"
+					onclick="PF('dlgEnd').show()"
+					icon="pi pi-plus"
+					styleClass="ui-button-secondary"/>
+						
+				<p:dialog
+					header="Novo endereço"
+					widgetVar="dlgEnd"
+					modal="true"
+					showEffect="fade"
+					hideEffect="fade"
+					resizable="false"
+					width="500">
+				
+					<p:panelGrid columns="2" style="width:100%">
+	                    <p:outputLabel 
+	                    	value="Logradouro:" 
+	                    	for="endLog"/>
+	                    	
+	                    <p:inputText 
+	                    	id="endLog" 
+	                    	value="#{cadastroPessoaBean.endereco.logradouro}" 
+	                    	required="true"
+	                    	style="width:100%"/>
+	                    
+	                    <p:outputLabel 
+	                    	value="Número" 
+	                    	for="endNum"/>
+	                    	
+	                    <p:inputText 
+	                    	id="endNum" 
+	                    	value="#{cadastroPessoaBean.endereco.numero}"
+	                    	style="width: 100%"/>
+	                    
+	                    <p:outputLabel 
+	                    	value="Cidade:" 
+	                    	for="endCid"/>
+	                    
+	                    <p:inputText 
+	                    	id="endCid" 
+	                    	value="#{cadastroPessoaBean.endereco.cidade}" 
+	                    	required="true"
+	                    	style="width:100%"/>
+	                </p:panelGrid>
+	                
+	                <div class="button-group">
+		                <p:commandButton 
+		                	value="Adicionar"
+		                    action="#{cadastroPessoaBean.adicionarEndereco}"
+		                    update="tabelaEnderecos messages"
+		                    oncomplete="PF('dlgEnd').hide()"/>
+		            </div>
+				</p:dialog>
+			</p:fieldset>
+
+			<!-- Contatos -->
+			<p:fieldset legend="Contatos" styleClass="custom-panel">
+				
+				<p:dataTable 
+					id="tabelaContatos"
+					value="#{cadastroPessoaBean.pessoa.contatos}" 
+					var="cont"
+					emptyMessage="Nenhum contato cadastrado!">
+					
+					<p:column headerText="Tipo" style="width: 30%">
+						<p:inputText value="#{cont.tipo}" />
+					</p:column>
+	
+					<p:column headerText="Valor" style="width: 50%">
+						<p:inputText value="#{cont.numero}" />
+					</p:column>
+	
+					<p:column headerText="Ações" style="width:20%; text-align:center">
+						<p:commandButton 
+							icon="pi pi-trash"
+							action="#{cadastroPessoaBean.removerContato(cont)}"
+							update="tabelaContatos messages" />
+					</p:column>
+				</p:dataTable>
+				
+				<p:commandButton 
+					value="Novo Contato" 
+	                onclick="PF('dlgCont').show()"
+	                icon="pi pi-plus"
+	                styleClass="ui-button-secondary"/>
+	                
+	            <p:dialog header="Novo Contato" 
+	                 widgetVar="dlgCont" 
+	                 modal="true" 
+	                 showEffect="fade" 
+	                 hideEffect="fade"
+	                 resizable="false"
+	                 width="400">
+	                 
+	               	<p:panelGrid columns="2" style="width: 100%">
+	                	<p:outputLabel 
+	                		value="Tipo:" 
+	                		for="contTipo"/>
+	                		
+	                	<p:inputText 
+	                		id="contTipo" 
+	                		value="#{cadastroPessoaBean.contato.tipo}" 
+	                		required="true"
+	                		style="width:100%"/>
+	                	
+	                	<p:outputLabel 
+	                		value="Valor:" 
+	                		for="contValor"/>
+	               		
+	               		<p:inputText 
+	               			id="contValor" 
+	               			value="#{cadastroPessoaBean.contato.numero}" 
+	               			required="true"
+	               			style="width:100%"/>
+	               	</p:panelGrid>
+	
+					<div class="button-group">
+						<p:commandButton 
+							value="Adicionar"
+							action="#{cadastroPessoaBean.adicionarContato}"
+							update="tabelaContatos messages" 
+							oncomplete="PF('dlgCont').hide()"/>
+					</div>
+	             </p:dialog>
+			</p:fieldset>
+
+			<p:toolbar styleClass="action-buttons">
+	            <p:toolbarGroup>
+					<p:commandButton 
+						value="Salvar"
+						action="#{cadastroPessoaBean.salvar}" 
+						update="formCadastro messages"
+						icon="pi pi-save"
+						style="margin-right: 10px" />
+						
+					<p:button 
+						value="Voltar" 
+						outcome="listar-pessoa.xhtml"
+						icon="pi pi-arrow-left"
+						styleClass="ui-button-secondary"/>
+				</p:toolbarGroup>
+			</p:toolbar>
+		</div>
+	</h:form>
+</h:body>
+</html>

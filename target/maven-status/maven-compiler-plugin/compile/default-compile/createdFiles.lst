@@ -1,0 +1,15 @@
+com/br/cadastropessoa/service/DocumentoService.class
+com/br/cadastropessoa/model/Endereco.class
+com/br/cadastropessoa/model/Contato.class
+com/br/cadastropessoa/service/EnderecoService.class
+com/br/cadastropessoa/service/PessoaService.class
+com/br/cadastropessoa/managedBean/PessoaBean.class
+com/br/cadastropessoa/config/GenericDAO.class
+com/br/cadastropessoa/DAO/ContatoDAO.class
+com/br/cadastropessoa/model/Pessoa.class
+com/br/cadastropessoa/model/Documento.class
+com/br/cadastropessoa/service/ContatoService.class
+com/br/cadastropessoa/DAO/EnderecoDAO.class
+com/br/cadastropessoa/DAO/PessoaDAO.class
+com/br/cadastropessoa/managedBean/CadastroPessoaBean.class
+com/br/cadastropessoa/DAO/DocumentoDAO.class

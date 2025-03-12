@@ -1,0 +1,15 @@
+/home/diegomarques/eclipse-workspace/cadastropessoa/src/main/java/com/br/cadastropessoa/DAO/ContatoDAO.java
+/home/diegomarques/eclipse-workspace/cadastropessoa/src/main/java/com/br/cadastropessoa/DAO/DocumentoDAO.java
+/home/diegomarques/eclipse-workspace/cadastropessoa/src/main/java/com/br/cadastropessoa/DAO/EnderecoDAO.java
+/home/diegomarques/eclipse-workspace/cadastropessoa/src/main/java/com/br/cadastropessoa/DAO/PessoaDAO.java
+/home/diegomarques/eclipse-workspace/cadastropessoa/src/main/java/com/br/cadastropessoa/config/GenericDAO.java
+/home/diegomarques/eclipse-workspace/cadastropessoa/src/main/java/com/br/cadastropessoa/managedBean/CadastroPessoaBean.java
+/home/diegomarques/eclipse-workspace/cadastropessoa/src/main/java/com/br/cadastropessoa/managedBean/PessoaBean.java
+/home/diegomarques/eclipse-workspace/cadastropessoa/src/main/java/com/br/cadastropessoa/model/Contato.java
+/home/diegomarques/eclipse-workspace/cadastropessoa/src/main/java/com/br/cadastropessoa/model/Documento.java
+/home/diegomarques/eclipse-workspace/cadastropessoa/src/main/java/com/br/cadastropessoa/model/Endereco.java
+/home/diegomarques/eclipse-workspace/cadastropessoa/src/main/java/com/br/cadastropessoa/model/Pessoa.java
+/home/diegomarques/eclipse-workspace/cadastropessoa/src/main/java/com/br/cadastropessoa/service/ContatoService.java
+/home/diegomarques/eclipse-workspace/cadastropessoa/src/main/java/com/br/cadastropessoa/service/DocumentoService.java
+/home/diegomarques/eclipse-workspace/cadastropessoa/src/main/java/com/br/cadastropessoa/service/EnderecoService.java
+/home/diegomarques/eclipse-workspace/cadastropessoa/src/main/java/com/br/cadastropessoa/service/PessoaService.java
