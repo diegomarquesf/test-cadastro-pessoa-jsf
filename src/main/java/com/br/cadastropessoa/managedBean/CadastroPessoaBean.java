@@ -1,12 +1,13 @@
 package com.br.cadastropessoa.managedBean;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -20,7 +21,7 @@ import com.br.cadastropessoa.service.EnderecoService;
 import com.br.cadastropessoa.service.PessoaService;
 
 @Named("cadastroPessoaBean")
-@RequestScoped
+@ViewScoped
 public class CadastroPessoaBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 
@@ -43,14 +44,27 @@ public class CadastroPessoaBean implements Serializable{
     
     @PostConstruct
     public void init() {
+    	if (pessoa == null) 
+            pessoa = new Pessoa();
+        
+        pessoa.setDocumentos(pessoa.getDocumentos() != null ? pessoa.getDocumentos() : new ArrayList<>());
+        pessoa.setEnderecos(pessoa.getEnderecos() != null ? pessoa.getEnderecos() : new ArrayList<>());
+        pessoa.setContatos(pessoa.getContatos() != null ? pessoa.getContatos() : new ArrayList<>());
+
+        documento = new Documento();
+        endereco = new Endereco();
+        contato = new Contato();
+    }
+    
+    public void novo() {
     	pessoa = new Pessoa();
     	pessoa.setDocumentos(new ArrayList<Documento>());
-        pessoa.setEnderecos(new ArrayList<Endereco>());
-        pessoa.setContatos(new ArrayList<Contato>());
-        
-    	endereco = new Endereco();
+    	pessoa.setEnderecos(new ArrayList<Endereco>());
+    	pessoa.setContatos(new ArrayList<Contato>());
+    	
     	documento = new Documento();
-    	contato = new Contato();
+        endereco = new Endereco();
+        contato = new Contato();
     }
 
     public void salvar() {
@@ -63,17 +77,43 @@ public class CadastroPessoaBean implements Serializable{
     	addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Pessoa cadastrada com sucesso!");
     	
     	init();
+    	
+    	try {
+            FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .redirect("listar-pessoa.xhtml");
+        } catch (IOException e) {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Falha ao redirecionar: " + e.getMessage());
+        }
+    }
+    
+    public void editar(Long id) throws IOException {
+    	pessoa = pessoaService.buscarPorId(id);
+    	
+    	if(pessoa != null) {
+    		try {
+                FacesContext.getCurrentInstance()
+                    .getExternalContext()
+                    .redirect("cadastro-pessoa.xhtml");
+            } catch (IOException e) {
+                addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Falha ao redirecionar: " + e.getMessage());
+            }
+    	}
     }
     
     public void adicionarDocumento() {
     	if (documento.getTipo() != null && !documento.getTipo().isEmpty() &&
     			documento.getNumero() != null && !documento.getNumero().isEmpty()) {
     		
-    		documento.setPessoa(pessoa);
-    		pessoa.getDocumentos().add(documento);
+    		Documento novoDocumento = new Documento();
+    		novoDocumento.setTipo(documento.getTipo());
+    		novoDocumento.setNumero(documento.getNumero());
+    		novoDocumento.setPessoa(pessoa);
+    		
+    		pessoa.getDocumentos().add(novoDocumento);
+    		documento = new Documento();
     		
     		addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Documento adicionado!");
-    		documento = new Documento();
     	} else {
     		addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Preencha todos os campos do documento!");
         }
@@ -85,18 +125,25 @@ public class CadastroPessoaBean implements Serializable{
     	if(doc.getId() != null)
     		documentoService.deletar(doc.getId());
     	
-    	addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Documento removido!");
+    	addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Documento removido!");
+    	
+    	FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("formCadastro:tabelasDocumentos");
     }
     
     public void adicionarEndereco() {
     	if (endereco.getLogradouro() != null && !endereco.getLogradouro().isEmpty() &&
     			endereco.getCidade() != null && !endereco.getCidade().isEmpty()){
     		
-    		endereco.setPessoa(pessoa);
-    		pessoa.getEnderecos().add(endereco);
-    		addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Endereco adicionado!");
+    		Endereco novoEndereco = new Endereco();
+    		novoEndereco.setLogradouro(endereco.getLogradouro());
+    		novoEndereco.setNumero(endereco.getNumero());
+    		novoEndereco.setCidade(endereco.getCidade());
+    		novoEndereco.setPessoa(pessoa);
     		
+    		pessoa.getEnderecos().add(novoEndereco);
     		endereco = new Endereco();
+    		
+    		addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Endereco adicionado!");
     	} else {
             addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Preencha os campos obrigatórios!");
         }
@@ -115,8 +162,13 @@ public class CadastroPessoaBean implements Serializable{
     	if (contato.getTipo() != null && !contato.getTipo().isEmpty() &&
     			contato.getNumero() != null && !contato.getNumero().isEmpty()){
     		
-    		contato.setPessoa(pessoa);
-    		pessoa.getContatos().add(contato);
+    		Contato novoContato = new Contato();
+    		novoContato.setTipo(contato.getTipo());
+    		novoContato.setNumero(contato.getNumero());
+    		novoContato.setPessoa(pessoa);
+    		
+    		pessoa.getContatos().add(novoContato);
+    		contato = new Contato();
     		
     		addMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Contato adicionado!");
     	} else {

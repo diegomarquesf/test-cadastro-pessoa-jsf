@@ -51,21 +51,26 @@
 					id="tabelaDocumentos"
 					value="#{cadastroPessoaBean.pessoa.documentos}" 
 					var="doc"
+					rows="10"
 					emptyMessage="Nenhum documento cadastrado!">
 					
 					<p:column headerText="Tipo" style="width: 50%">
-						<p:inputText value="#{doc.tipo}" />
+						<p:inputText 
+							value="#{doc.tipo}"
+							readonly="true" />
 					</p:column>
 	
 					<p:column headerText="Número" style="width:50%">
-						<p:inputText value="#{doc.numero}" />
+						<p:inputText 
+							value="#{doc.numero}"
+							readonly="true" />
 					</p:column>
 	
 					<p:column headerText="Ações" style="width:20%; text-align:center">
 						<p:commandButton 
-							icon="pi pi-trash"
-							action="#{cadastroPessoaBean.removerDocumento(doc)}"
-							update="tabelaDocumentos messages" />
+	                        icon="pi pi-trash"
+	                        action="#{cadastroPessoaBean.removerDocumento(doc)}"
+	                        update=":formCadastro:tabelaDocumentos :formCadastro:messages"/>
 					</p:column>
 				</p:dataTable>
 				
@@ -73,7 +78,8 @@
 					value="Novo Documento"
 					onclick="PF('dlgDoc').show()"
 	                icon="pi pi-plus"
-	                styleClass="ui-button-secondary"/>
+	                styleClass="ui-button-secondary"
+	                process="dlgDoc"/>
 	                
 				<p:dialog 
 					id="dlgDoc"
@@ -83,7 +89,8 @@
 	                showEffect="fade" 
 	                hideEffect="fade"
 	                resizable="false"
-	                width="400">
+	                width="400"
+	                dynamic="true">
 	                
 		           <p:panelGrid columns="2" style="width:100%">
 		           		<p:outputLabel 
@@ -109,9 +116,9 @@
 			           	<p:commandButton 
 			           		value="Adicionar"
 				            action="#{cadastroPessoaBean.adicionarDocumento}"
-				            update="tabelaDocumentos messages"
 				            oncomplete="PF('dlgDoc').hide()"
-				           	process="formCadastro dlgDoc" />
+				            update=":formCadastro:tabelaDocumentos :formCadastro:messages"
+				            process="dlgDoc"/>
 				    </div>
 		        </p:dialog>
 			</p:fieldset>
@@ -126,22 +133,28 @@
 					emptyMessage="Nenhum endereço cadastrado" >
 					
 					<p:column headerText="Logradouro" style="width: 40%">
-						<p:inputText value="#{end.logradouro}" />
+						<p:inputText 
+							value="#{end.logradouro}"
+							readonly="true" />
 					</p:column>
 	
 					<p:column headerText="Número" style="width: 15%">
-						<p:inputText value="#{end.numero}" />
+						<p:inputText 
+							value="#{end.numero}"
+							readonly="true" />
 					</p:column>
 	
 					<p:column headerText="Cidade" style="width: 15%">
-						<p:inputText value="#{end.cidade}" />
+						<p:inputText 
+							value="#{end.cidade}"
+							readonly="true" />
 					</p:column>
 	
 					<p:column headerText="Ações" style="width:20%; text-align:center">
 						<p:commandButton 
 							icon="pi pi-trash"
 							action="#{cadastroPessoaBean.removerEndereco(end)}"
-							update="tabelaEnderecos messages" />
+							update=":formCadastro:tabelaEnderecos :formCadastro:messages"/>
 					</p:column>
 				</p:dataTable>
 				
@@ -149,6 +162,7 @@
 					value="Novo Endereço"
 					onclick="PF('dlgEnd').show()"
 					icon="pi pi-plus"
+					process="dlgEnd"
 					styleClass="ui-button-secondary"/>
 						
 				<p:dialog
@@ -159,7 +173,8 @@
 					showEffect="fade"
 					hideEffect="fade"
 					resizable="false"
-					width="500">
+					width="500"
+					dynamic="true">
 				
 					<p:panelGrid columns="2" style="width:100%">
 	                    <p:outputLabel 
@@ -194,9 +209,9 @@
 		                <p:commandButton 
 		                	value="Adicionar"
 		                    action="#{cadastroPessoaBean.adicionarEndereco}"
-		                    update="tabelaEnderecos messages"
 		                    oncomplete="PF('dlgEnd').hide()"
-		                    process="formCadastro dlgEnd" />
+		                    process="dlgEnd"
+		                    update=":formCadastro:tabelaEnderecos :formCadastro:messages"/> 
 		            </div>
 				</p:dialog>
 			</p:fieldset>
@@ -211,18 +226,22 @@
 					emptyMessage="Nenhum contato cadastrado!">
 					
 					<p:column headerText="Tipo" style="width: 30%">
-						<p:inputText value="#{cont.tipo}" />
+						<p:inputText 
+							value="#{cont.tipo}"
+							readonly="true" />
 					</p:column>
 	
 					<p:column headerText="Valor" style="width: 50%">
-						<p:inputText value="#{cont.numero}" />
+						<p:inputText 
+							value="#{cont.numero}"
+							readonly="true" />
 					</p:column>
 	
 					<p:column headerText="Ações" style="width:20%; text-align:center">
 						<p:commandButton 
 							icon="pi pi-trash"
 							action="#{cadastroPessoaBean.removerContato(cont)}"
-							update="tabelaContatos messages" />
+							update=":formCadastro:tabelaContatos :formCadastro:messages"/>
 					</p:column>
 				</p:dataTable>
 				
@@ -230,6 +249,7 @@
 					value="Novo Contato" 
 	                onclick="PF('dlgCont').show()"
 	                icon="pi pi-plus"
+	                process="dlgCont"
 	                styleClass="ui-button-secondary"/>
 	                
 	            <p:dialog
@@ -240,7 +260,8 @@
 	                 showEffect="fade" 
 	                 hideEffect="fade"
 	                 resizable="false"
-	                 width="400">
+	                 width="400"
+	                 dynamic="true">
 	                 
 	               	<p:panelGrid columns="2" style="width: 100%">
 	                	<p:outputLabel 
@@ -266,9 +287,9 @@
 						<p:commandButton 
 							value="Adicionar"
 							action="#{cadastroPessoaBean.adicionarContato}"
-							update="tabelaContatos messages" 
 							oncomplete="PF('dlgCont').hide()"
-							process="formCadastro dlgCont" />
+							process="dlgCont" 
+							update=":formCadastro:tabelaContatos :formCadastro:messages"/>
 					</div>
 	             </p:dialog>
 			</p:fieldset>

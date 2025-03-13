@@ -72,14 +72,11 @@
 	
 				<p:column headerText="Ações" style="text-align:center; width:40%;">
 					<!--  Botão Editar -->
-					<p:button 
+					<p:commandButton
+						actionListener="#{cadastroPessoaBean.editar(pessoa.id)}"
 						icon="pi pi-pencil" 
 						styleClass="ui-button-warning ui-button-rounded"
-	                    title="Editar" 
-	                    outcome="cadastro-pessoa.xhtml">
-	                    
-						<f:param name="id" value="#{pessoa.id}" />
-					</p:button>
+	                    title="Editar"/>
 	
 					<!--  Botão Excluir -->
 					<p:commandButton 
